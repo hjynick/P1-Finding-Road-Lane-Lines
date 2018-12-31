@@ -23,6 +23,8 @@ The goals / steps of this project are the following:
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
+first I would like to describe what i think about this project. When i take consideration of the computer vision technique that i've learned in the previous course i thought that I can first couvert the image to grayscale, process the image with canny function and don't need to select the white and yellow color in this image. but When i did that i realized that there are a lot of noise that I can't get rid of. so finally i add this step to my pipeline
+
 My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
 
 In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
