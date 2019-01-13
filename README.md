@@ -15,42 +15,35 @@ To complete the project, two files will be submitted: a file containing project 
 To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
 
 
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
+### Reflection
 
-1. Describe the pipeline
+### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-2. Identify any shortcomings
+first I would like to describe what i think about this project. When i take consideration of the computer vision technique that i've learned in the previous course i thought that I can first couvert the image to grayscale, process the image with canny function and don't need to select the white and yellow color in this image. but When i did that i realized that there are a lot of noise that I can't get rid of. so finally i add this step to my pipeline.
 
-3. Suggest possible improvements
+My pipeline consisted of 5 steps. First, I select the yellow and white color on the image so that the yellow and white lane lines appear on the image, then I converted the images to grayscale.
 
-We encourage using images in your writeup to demonstrate how your pipeline works.  
+At the third part of the pipeline, I use the Gaussian filter with the 5x5 Kernel to smooth the image. Then I apply Canny function on the image and got the black background with several white lines. Finally I apply Hough function houghlineP() (Probabilistic Hough Line Transform), so that i can get several lines segment in a library image, and then i can draw the right and left lane lines on the road image with these segments.
 
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
+<img src="test_images_output/laneline1.png" width="480" alt="Image detection" />
 
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
+In order to draw a single line on the left and right lanes, I modified the draw_lines() function by extract the right and left slope and intersection,average them, and add them to a list.
 
 
-The Project
----
+![alt text][image1]
 
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
 
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
+### 2. Identify potential shortcomings with your current pipeline
 
-**Step 2:** Open the code in a Jupyter Notebook
 
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
+One potential shortcoming would be what would happen when the curvature in the lane lines exist. In this case the detection of the lane lines would be difficult because the hough transform can only detect the straight lines.
 
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
+Another shortcoming could be is that it won't work for steep (up or down) roads because the region of interest mask is assumed from the center of the image.
 
-`> jupyter notebook`
 
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
+### 3. Suggest possible improvements to your pipeline
 
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
+A possible improvement would be to ...
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+Another potential improvement could be to ...
 
