@@ -30,7 +30,33 @@ At the third part of the pipeline, I use the Gaussian filter with the 5x5 Kernel
 In order to draw a single line on the left and right lanes, I modified the draw_lines() function by extract the right and left slope and intersection,average them, and add them to a list.
 
 
-![alt text][image1]
+(''')
+def line_select_extrapolate(lines):
+    leftlines    = [] # (slope, intercept)
+    leftlines_weights  = [] # (length,)
+    rightlines   = [] # (slope, intercept)
+    rightlines_weights = [] # (length,)
+    
+    for line in lines:
+        for x1, y1, x2, y2 in line:
+            if x2==x1:
+                continue # ignore a vertical line
+            slope = (y2-y1)/(x2-x1)
+            intercept = y1 - slope*x1
+            length = np.sqrt((y2-y1)**2+(x2-x1)**2)
+            if slope < 0: # y is reversed in image
+                leftlines.append((slope, intercept))
+                leftlines_weights.append((length))
+            else:
+                rightlines.append((slope, intercept))
+                rightlines_weights.append((length))
+    
+    # add more weight to longer lines    
+    left_lane  = np.dot(leftlines_weights,  leftlines) /np.sum(leftlines_weights)  if len(leftlines_weights) >0 else None
+    right_lane = np.dot(rightlines_weights, rightlines)/np.sum(rightlines_weights) if len(rightlines_weights)>0 else None
+    
+    return left_lane, right_lane # (slope, intercept), (slope, intercept)
+(''')
 
 
 ### 2. Identify potential shortcomings with your current pipeline
@@ -43,7 +69,7 @@ Another shortcoming could be is that it won't work for steep (up or down) roads 
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
+A possible improvement would be to use the hough circle transform and combine it with hough lines, so that we can detect the curvature better.
 
-Another potential improvement could be to ...
+Another potential improvement could be to use some machine learning methods to learn specific shapes of lanes and then detect them. It could be necessary when the road is without any lane.
 
